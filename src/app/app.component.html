@@ -3,31 +3,80 @@
     <div class="branding">
       <a href="#" class="nav-link">
         <span class="clr-icon clr-clarity-logo"></span>
-        <span class="title">Clarity</span>
+        <span class="title">Traveller</span>
       </a>
     </div>
-    <form class="search">
-      <label for="search_input">
-        <input id="search_input" type="text" placeholder="Search for Components...">
-      </label>
-    </form>
-    <div class="header-actions">
-    </div>
+      <div class="header-nav">
+          <a href="#" class="nav-link" [class.active]="router.url==='/home'" [routerLink]="['/home']" ><span class="nav-text">Home</span></a>
+          <a href="#" class="nav-link" [class.active]="router.url==='/blog/overview' || router.url === '/blog/edit'"
+             [routerLink]="['/blog/overview']"><span class="nav-text">Blog Review</span></a>
+          <a href="#" class="nav-link" [class.active]="router.url==='/about'" [routerLink]="['/about']"><span class="nav-text">Authority</span></a>
+      </div>
+      <div class="header-actions">
+          <clr-dropdown clrMenuPosition="bottom-right">
+              <button class="nav-icon" clrDropdownToggle>
+                  <clr-icon shape="user"></clr-icon>
+                  <clr-icon shape="caret down"></clr-icon>
+              </button>
+              <clr-dropdown-menu>
+                  <a (click)="onClickLogin()" clrDropdownItem>Log in</a>
+                  <a href="..." clrDropdownItem>About</a>
+                  <a href="..." clrDropdownItem>Log out</a>
+              </clr-dropdown-menu>
+          </clr-dropdown>
+      </div>
   </clr-header>
-  <nav class="sub-nav" [clr-nav-level]="1">
-    <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#" [routerLink]="['/home']"
-           [class.active]="router.url==='/home' || router.url==='/'">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" [routerLink]="['/about']" [class.active]="router.url==='/about'">About</a>
-      </li>
-    </ul>
-  </nav>
+
   <div class="content-container">
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
   </div>
+    <clr-modal [(clrModalOpen)]= "opening">
+        <h3 class="modal-title"> SJTU<span class="trademark">&#8482;</span>
+            Traveller&#174;</h3>
+        <div class="modal-body ">
+            <h4>Login</h4>
+            <form class="form" [formGroup]="employeeAddressForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+                <section class="form-block">
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <label for="username"
+                               aria-haspopup="true"
+                               role="tooltip"
+                               class="tooltip tooltip-validation tooltip-sm"
+                               [class.invalid]="employeeAddressForm.get('username').invalid
+                    && (employeeAddressForm.get('username').dirty || employeeAddressForm.get('username').touched)">
+                            <input id="username" type="text"
+                                   formControlName="username">
+                            <span class="tooltip-content">
+                    Username is required.
+                </span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                            <label for="password">Password</label>
+                            <label for="password"
+                                   aria-haspopup="true"
+                                   role="tooltip"
+                                   class="tooltip tooltip-validation tooltip-sm"
+                                   [class.invalid]="employeeAddressForm.get('password').invalid
+                                    && (employeeAddressForm.get('password').dirty ||
+                        employeeAddressForm.get('password').touched) ">
+                                <input id="password" type="password"
+                                       formControlName="password">
+                                <span class="tooltip-content">
+                        Password is required.
+                    </span>
+                            </label>
+                    </div>
+                    <button class="btn btn-primary"
+                            type="submit"
+                            [disabled]="employeeAddressForm.invalid">Submit</button>
+                    <button class="btn btn-secondary-outline"
+                            onclick="opening = false; submitted = false">Cancel</button>
+                </section>
+            </form>
+        </div>
+    </clr-modal>
 </clr-main-container>

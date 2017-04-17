@@ -18,7 +18,7 @@ describe('AppComponent', () => {
             declarations: [
                 AppComponent,
                 AboutComponent,
-                HomeComponent
+                HomeComponent,
             ],
             imports: [
                 ClarityModule.forRoot(),
@@ -30,7 +30,6 @@ describe('AppComponent', () => {
         fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
         compiled = fixture.nativeElement;
-
 
     });
 
