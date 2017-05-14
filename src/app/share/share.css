@@ -1,0 +1,108 @@
+#reviewerTable{
+    display: inline-block;
+    max-width: 30vw;
+}
+#reviewComment{
+    width: 30vw;
+    height: 14vh;
+    margin-left: 5vw;
+}
+
+#editTable{
+    max-width: 30vw;
+}
+
+#reviewerTable thead, tbody tr {
+    width: 30vw;
+    display:table;
+    width:100%;
+    table-layout: fixed;
+}
+
+#reviewerTable td, #reviewerTable th, #authoritytable td, #authoritytable th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sidenav {
+    height: 100%;
+    overflow: auto;
+}
+
+#mytable, #authoritytable {
+    height: 70vh;
+    width: 50vw;
+}
+
+
+#mytable tbody, #authoritytable tbody {
+    display:block;
+    height:70vh;
+    overflow-y:scroll;
+}
+#mytable thead, #mytable tbody tr, #authoritytable thead, #authoritytable tbody tr {
+    display:table;
+    width:100%;
+    table-layout: fixed;
+}
+
+#readtext {
+    height: 40vh;
+}
+#comment {
+    width: 50vw;
+    height: 20vh;
+}
+ #myform {
+    height: 40vh;
+}
+ #mysection {
+     height: 30vh;
+ }
+clr-main-container{
+    overflow: auto;
+}
+.content-area{
+    overflow: hidden;
+}
+
+.sidenav{
+    height: 90vh;
+    overflow: visible;
+}
+
+.span {
+    position: relative;
+    width: 20vw;
+}
+#confidence, #point {
+    width: 18vw;
+}
+
+.span:after {
+    position: absolute;
+    top: 1.5em;
+    right: 0em;
+    content: attr(data-range-max);
+}
+.span:before {
+    position: absolute;
+    top: 1.5em;
+    content: attr(data-range-min);
+}
+.tag{
+    margin-top: 0px;
+}
+.custom-radio {
+    margin-left: 50px;
+}
+.img-wrapper {
+    display: block;
+    min-width: 300px;
+    min-height: 200px;
+}
+#display-img {
+    display: block;
+    min-width: 300px;
+    min-height: 200px;
+}

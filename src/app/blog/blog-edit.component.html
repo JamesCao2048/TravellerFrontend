@@ -1,41 +1,122 @@
+
 <nav class="sub-nav">
     <ul class="nav">
         <li class="nav-item">
             <a class="nav-link" href="#" [routerLink]="['/blog/overview']">Overview</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#" [routerLink]="['/blog/edit']">Edit Blog</a>
+            <a class="nav-link" href="#" [routerLink]="['/blog/review']">Review Blog</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Edit Blog</a>
         </li>
     </ul>
 </nav>
-<h3>BlogEdit</h3>
-<nav class="sidenav">
-    <section class="sidenav-content">
-        <a href="..." class="nav-link active">
-            Nav Element 1
-        </a>
-        <a href="..." class="nav-link">
-            Nav Element 2
-        </a>
-        <section class="nav-group collapsible">
-            <input id="tabexample1" type="checkbox">
-            <label for="tabexample1">Collapsible Nav Element</label>
-            <ul class="nav-list">
-                <li><a class="nav-link">Link 1</a></li>
-                <li><a class="nav-link">Link 2</a></li>
-            </ul>
+<div class="content-container">
+    <div class="content-area">
+        <div *ngIf="curBlog != undefined">
+            <textarea [readonly]="true" id="readtext">{{curBlog.ar_content}}</textarea>
+        <section>
+            <button class="btn btn-primary" (click)="opening = true" [hidden]="curBlog.ar_url_list == undefined || curBlog.ar_url_list.length ===0">View Image</button>
         </section>
-        <section class="nav-group">
-            <input id="tabexample2" type="checkbox">
-            <label for="tabexample2">Default Nav Element</label>
-            <ul class="nav-list">
-                <li><a class="nav-link">Link 1</a></li>
-                <li><a class="nav-link">Link 2</a></li>
-                <li><a class="nav-link active">Link 3</a></li>
-                <li><a class="nav-link">Link 4</a></li>
-                <li><a class="nav-link">Link 5</a></li>
-                <li><a class="nav-link">Link 6</a></li>
-            </ul>
+        <table *ngIf="curBlog != undefined && curBlog.ar_reviewer != undefined && curBlog.ar_reviewer.length > 0" class="table table-condensed table-responsive"
+               id ="reviewerTable">
+            <thead>
+            <tr>
+                <th>Reviewer</th>
+                <th>Point</th>
+                <th>Confidence</th>
+                <th>Detail</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let reviwer of curBlog.ar_reviewer; let i = index" >
+                <td> {{reviwer.u_name}}</td>
+                <td *ngIf="curBlog.ar_review_list[i] != undefined">
+                    {{curBlog.ar_review_list[i].ar_point}}
+                </td>
+                <td *ngIf="curBlog.ar_review_list[i] != undefined">
+                    {{curBlog.ar_review_list[i].ar_confidence}}
+                </td>
+                <td *ngIf="curBlog.ar_review_list[i] != undefined">
+                    <clr-icon shape="lightbulb" (click)="onClickReview(i)" class="icon-info"></clr-icon>
+                </td>
+
+                <td *ngIf="curBlog.ar_review_list[i] == undefined" >
+                    Waiting
+                </td>
+                <td *ngIf="curBlog.ar_review_list[i] == undefined">
+                    Waiting
+                </td>
+                <td *ngIf="curBlog.ar_review_list[i] == undefined">
+                    Waiting
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <textarea id="reviewComment" readonly *ngIf="curReview != undefined">
+            {{curReview.ar_comment}}
+        </textarea>
+            <table *ngIf="curBlog.ar_editor !=undefined" class="table table-responsive" id="editTable">
+                <tr>
+                    <th>Editor</th>
+                    <th>Status</th>
+                    <th>Comment</th>
+                </tr>
+                <tr>
+                    <td>{{curBlog.ar_editor.u_name}}</td>
+                    <td>{{curBlog.ar_review_list.length < 4? 'Waiting': (curBlog.ar_review_list[3].ar_result ==0? 'Decline':'Pass')}}</td>
+                    <td *ngIf="curBlog.ar_review_list.length < 4"> Waiting</td>
+                    <td *ngIf="curBlog.ar_review_list.length === 4"><clr-icon shape="lightbulb" (click)="onClickReview(3)"></clr-icon></td>
+                </tr>
+            </table>
+        <form class="form" [formGroup]="employeeAddressForm" (ngSubmit)="onSubmit()" [hidden]="ifWrite()"  id="myform">
+            <section class="form-block" id="mysection">
+                <div class="form-group">
+                    <label for="result">Result</label>
+                        <input id="result" type="radio"
+                            formControlName="result" value="Pass" class="custom-radio"/> Pass
+                        <input type="radio" name="result" value="Decline" formControlName="result" class="custom-radio"/> Decline
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <label for="comment"
+                           aria-haspopup="true"
+                           role="tooltip"
+                           class="tooltip tooltip-validation tooltip-sm"
+                           [class.invalid]="employeeAddressForm.get('comment').invalid
+                                    && (employeeAddressForm.get('comment').dirty ||
+                        employeeAddressForm.get('comment').touched) ">
+                        <textarea id="comment"
+                                  formControlName="comment">
+                        </textarea>
+                        <span class="tooltip-content">
+                        Comment is required.
+                    </span>
+                    </label>
+                </div>
+            </section>
+            <button class="btn btn-primary pull-lg-3"
+                    type="submit"
+                    [disabled]="employeeAddressForm.invalid" >Submit</button>
+        </form>
+    </div>
+        <clr-modal [(clrModalOpen)]= "opening">
+            <!--<img  *ngIf="curBlog != undefined" [src] = "curBlog.ar_url_list[0].ar_url"> -->
+            <div class="modal-body">
+                <div class="img-wrapper">
+                    <img *ngIf="curBlog != undefined && curBlog.ar_url_list !=undefined && curBlog.ar_url_list[imgCount]!=undefined" [src]="curBlog.ar_url_list[imgCount].ar_url" alt="not available image" (click)="onClickImg()"
+                         id="display-img">
+                </div>
+            </div>
+        </clr-modal>
+    </div>
+    <nav class="sidenav ">
+        <section class="sidenav-content">
+            <a *ngFor="let blog of blogs" (click)="onClickNav(blog)" class="nav-link">
+                {{blog.ar_title}}
+            </a>
         </section>
-    </section>
-</nav>
+    </nav>
+    </div>
+

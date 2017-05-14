@@ -1,0 +1,40 @@
+<!--
+  ~ Copyright (c) 2016 VMware, Inc. All Rights Reserved.
+  ~ This software is released under MIT license.
+  ~ The full license information can be found in LICENSE in the root directory of this project.
+  -->
+<table class="table table-condensed table-responsive" id="authoritytable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Mail</th>
+        <th>Role</th>
+        <th>Save</th>
+    </tr>
+    </thead>
+    <tfoot>
+    </tfoot>
+    <tbody>
+    <tr *ngFor="let user of users">
+        <td>
+            {{user.u_name}}
+        </td>
+        <td>
+            {{user.u_mail}}
+        </td>
+        <td >
+            <div *ngIf="user.u_role < cookieService.getObject('user').u_role" class="select">
+                <select [(ngModel)]="selectMap[user.id]">
+                    <!--<option [value]="selectMap[user.id]" selected>{{getRoleName(selectMap[user.id])}}</option>-->
+                    <option [value]="user.u_role" selected>{{getRoleName(user.u_role)}}</option>
+                    <option *ngFor="let role of getOptions(getRoleName(user.u_role))" [value]="role">{{role}}</option>
+                </select>
+            </div>
+            <span *ngIf="user.u_role >= cookieService.getObject('user').u_role ">{{getRoleName(user.u_role)}}</span>
+        </td>
+        <td> <clr-icon shape="circle" (click)="onClickSubmit(user)"></clr-icon></td>
+    </tbody>
+</table>
+
+<button class="btn btn-primary" (click)="onSubmit()">Submit</button>
+<button class="btn btn-secondary-outline" (click)="onLog()" [hidden]="true">Log</button>

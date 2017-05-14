@@ -1,16 +1,21 @@
 <clr-main-container>
-  <clr-header>
+  <clr-header style="background-color: darkred">
     <div class="branding">
       <a href="#" class="nav-link">
         <span class="clr-icon clr-clarity-logo"></span>
-        <span class="title">Traveller</span>
+        <span class="title">Swaps</span>
       </a>
     </div>
       <div class="header-nav">
           <a href="#" class="nav-link" [class.active]="router.url==='/home'" [routerLink]="['/home']" ><span class="nav-text">Home</span></a>
-          <a href="#" class="nav-link" [class.active]="router.url==='/blog/overview' || router.url === '/blog/edit'"
+          <div *ngIf="(cookieService.getObject('user')!=null) && (cookieService.getObject('user').u_role > 1) ">
+          <a href="#" class="nav-link" [class.active]="router.url==='/blog/overview' || router.url === '/blog/edit' || router.url === '/blog/review'"
              [routerLink]="['/blog/overview']"><span class="nav-text">Blog Review</span></a>
-          <a href="#" class="nav-link" [class.active]="router.url==='/about'" [routerLink]="['/about']"><span class="nav-text">Authority</span></a>
+          <a href="#" class="nav-link" [class.active]="router.url==='/authority'" [routerLink]="['/authority']"><span class="nav-text">Authority</span></a>
+              <a href="#" class="nav-link" [class.active]="router.url==='/depth'" [routerLink]="['/depth']" ><span class="nav-text">Marketdepth</span></a>
+              <a href="#" class="nav-link" [class.active]="router.url==='/transaction'" [routerLink]="['/transaction']" ><span class="nav-text">Transaction</span></a>
+              <a href="#" class="nav-link" [class.active]="router.url==='/order'" [routerLink]="['/order']" ><span class="nav-text">Order</span></a>
+          </div>
       </div>
       <div class="header-actions">
           <clr-dropdown clrMenuPosition="bottom-right">
@@ -19,28 +24,28 @@
                   <clr-icon shape="caret down"></clr-icon>
               </button>
               <clr-dropdown-menu>
+                  <div *ngIf="(cookieService.getObject('user')==null)">
                   <a (click)="onClickLogin()" clrDropdownItem>Log in</a>
-                  <a href="..." clrDropdownItem>About</a>
-                  <a href="..." clrDropdownItem>Log out</a>
+                  </div>
+                  <div *ngIf="(cookieService.getObject('user')!=null)">
+                  <a href="#" [routerLink]="['/profile']" clrDropdownItem>Profile</a>
+                  <a href="#" (click)="onClickLogout()" [routerLink]="['/home']"  clrDropdownItem>Log out</a>
+                  </div>
               </clr-dropdown-menu>
           </clr-dropdown>
       </div>
   </clr-header>
 
-  <div class="content-container">
-    <div class="content-area">
       <router-outlet></router-outlet>
-    </div>
-  </div>
     <clr-modal [(clrModalOpen)]= "opening">
         <h3 class="modal-title"> SJTU<span class="trademark">&#8482;</span>
             Traveller&#174;</h3>
         <div class="modal-body ">
-            <h4>Login</h4>
+            <h4>Login Form</h4>
             <form class="form" [formGroup]="employeeAddressForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
                 <section class="form-block">
                     <div class="form-group">
-                        <label for="username">username</label>
+                        <label for="username">Username</label>
                         <label for="username"
                                aria-haspopup="true"
                                role="tooltip"
@@ -80,3 +85,4 @@
         </div>
     </clr-modal>
 </clr-main-container>
+

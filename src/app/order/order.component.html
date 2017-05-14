@@ -1,0 +1,44 @@
+<h2>Order</h2>
+<h4>Create Order</h4>
+<form class="form" [formGroup]="employeeAddressForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+    <section class="form-block">
+        <div class="form-group">
+            <label for="broker">Broker</label>
+            <label for="broker"
+                   aria-haspopup="true"
+                   role="tooltip"
+                   class="tooltip tooltip-validation tooltip-sm"
+                   [class.invalid]="employeeAddressForm.get('broker').invalid
+                    && (employeeAddressForm.get('broker').dirty || employeeAddressForm.get('broker').touched)">
+                <select id="broker" formControlName="broker"  [(ngModel)]="curBrokerId" >
+                    <option *ngFor="let broker of brokers">{{broker.b_id}}</option>
+                </select>
+                <span class="tooltip-content">
+                    Broker is required.
+                </span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="commodity">Commodity</label>
+            <label for="commodity"
+                   aria-haspopup="true"
+                   role="tooltip"
+                   class="tooltip tooltip-validation tooltip-sm"
+                   [class.invalid]="employeeAddressForm.get('commodity').invalid
+                                    && (employeeAddressForm.get('commodity').dirty ||
+                        employeeAddressForm.get('commodity').touched) ">
+                <select id="commodity" formControlName="commodity">
+                    <option *ngFor="let commodity of broker_commodity[curBrokerId]">{{commodity.c_id}}</option>
+                </select>
+                <span class="tooltip-content">
+                        Commodity is required.
+                    </span>
+            </label>
+        </div>
+        <button class="btn btn-primary"
+                type="submit"
+                [disabled]="employeeAddressForm.invalid">Submit</button>
+        <button class="btn btn-secondary-outline"
+                onclick="opening = false; submitted = false">Cancel</button>
+    </section>
+</form>

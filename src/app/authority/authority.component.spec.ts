@@ -5,10 +5,10 @@
  */
 import { async, TestBed, ComponentFixture } from "@angular/core/testing";
 import { ClarityModule } from 'clarity-angular';
-import { AboutComponent } from './about.component';
+import { AuthorityComponent } from './authority.component';
 
 
-describe('AboutComponent', () => {
+describe('AuthorityComponent', () => {
 
     let expectedMsg: string = 'This is a page to help demonstrate routing.';
 
@@ -18,14 +18,14 @@ describe('AboutComponent', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             declarations: [
-                AboutComponent
+                AuthorityComponent
             ],
             imports: [
                 ClarityModule.forRoot()
             ]
         });
 
-        fixture = TestBed.createComponent(AboutComponent);
+        fixture = TestBed.createComponent(AuthorityComponent);
         fixture.detectChanges();
         compiled = fixture.nativeElement;
 
@@ -35,13 +35,11 @@ describe('AboutComponent', () => {
         fixture.destroy();
     });
 
-    it('should create the about page', async(() => {
+    it('should create the authority page', async(() => {
         expect(compiled).toBeTruthy();
     }));
 
     it(`should display: "${expectedMsg}"`, async(() => {
         expect(compiled.querySelector("p").textContent).toMatch(expectedMsg);
     }));
-
-
 });

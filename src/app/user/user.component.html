@@ -1,0 +1,23 @@
+<label class="label-blue">Profile</label>
+<table *ngIf="cookieService.getObject('user')!=null" class="table table-vertical">
+    <tbody>
+    <tr>
+        <th>Hash</th>
+        <td>{{cookieService.getObject('user').u_hash == null? 'undefined':cookieService.getObject('user').u_hash }}</td>
+    </tr>
+    <tr>
+        <th>Name</th>
+        <td>{{cookieService.getObject('user').u_name == null? 'undefined':cookieService.getObject('user').u_name}}</td>
+    </tr>
+    <tr>
+        <th>Mail</th>
+        <td>{{cookieService.getObject('user').u_mail  == null? 'undefined':cookieService.getObject('user').u_mail}}</td>
+    </tr>
+    <tr>
+        <th>Role</th>
+        <td>{{cookieService.getObject('user').u_role == null? 'undefined':cookieService.getObject('user').u_role}}</td>
+    </tr>
+    </tbody>
+</table>
+
+

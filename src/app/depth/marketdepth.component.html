@@ -1,0 +1,35 @@
+<h2>Market Depth</h2>
+<select [(ngModel)]="curBrokerId" (change)="changeBroker()">
+    <option *ngFor="let broker of brokers">{{broker.b_id}}</option>
+</select>
+<select [(ngModel)]="curCommodityId" (change)="changeCommodity()">
+    <option *ngFor="let commodity of broker_commodity[curBrokerId]">{{commodity.c_id}}</option>
+</select>
+<!--
+<span>{{curBroker.b_name}}</span>
+<span>{{curCommodity.c_name}}</span>-->
+<clr-datagrid>
+    <clr-dg-column>Buy Level</clr-dg-column>
+    <clr-dg-column [clrDgField]="'vol'" [clrDgSortBy]="buyComparator">Buy Vol</clr-dg-column>
+    <clr-dg-column [clrDgField]="'price'" [clrDgSortBy]="priceComparator">Price</clr-dg-column>
+    <clr-dg-column [clrDgField]="'vol'" [clrDgSortBy]="sellComparator">Sell Vol</clr-dg-column>
+    <clr-dg-column>Sell Level</clr-dg-column>
+    <clr-dg-column [clrDgField]="'company_id'">Company</clr-dg-column>
+
+    <clr-dg-row *clrDgItems="let order of curDepth.sell_orders.concat(curDepth.buy_orders);">
+        <clr-dg-cell *ngIf="order.sell"></clr-dg-cell>
+        <clr-dg-cell *ngIf="order.sell"></clr-dg-cell>
+        <clr-dg-cell *ngIf="order.sell">{{order.price}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="order.sell">{{order.vol}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="order.sell">{{order.depn}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="order.sell">{{order.company_id}}</clr-dg-cell>
+
+        <clr-dg-cell *ngIf="!order.sell">{{order.depn}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="!order.sell">{{order.vol}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="!order.sell">{{order.price}}</clr-dg-cell>
+        <clr-dg-cell *ngIf="!order.sell"></clr-dg-cell>
+        <clr-dg-cell *ngIf="!order.sell"></clr-dg-cell>
+        <clr-dg-cell *ngIf="!order.sell">{{order.company_id}}</clr-dg-cell>
+    </clr-dg-row>
+    <clr-dg-footer>Broker: {{curBroker.b_name}}  Commodity: {{curCommodity.c_name}}  </clr-dg-footer>
+</clr-datagrid>
